@@ -39,15 +39,46 @@ $(document).ready(function onStart() {
 
 $("#play-again").hide();
 
-for (i = 0; i < triviaQuestions.length; i++) {
-    var holder = triviaQuestions[i];
-    console.log(holder);
-}
+
 
 //main game start and reset
 $(".start-button").on("click", function reset() {
     $("p").hide();
     $(".start-button").hide();
+
+    for (i = 0; i < triviaQuestions.length; i++) {
+        var qholder = triviaQuestions[i];
+        qHolder.push(triviaQuestions[i]);
+        console.log(qholder);
+    }
+    
+    showQuestionAndAnswers();
+    
+    function showQuestionAndAnswers() {
+        idx = Math.floor(Math.random() * triviaQuestions.length);
+        randomChoice = triviaQuestions[idx];
+        console.log(randomChoice);
+        $(".question-picked").html("<h2>" + randomChoice.question + "</h2>");
+        //go over this again, still unclear
+        for (var i= 0; i < randomChoice.choices.length; i++) {
+            var playerChoice = $("<div>");
+            playerChoice.addClass("player-choice");
+            playerChoice.html(randomChoice.choices[i]);
+            playerChoice.attr("data-guessvalue", i);
+            $(".possible-answers").append(playerChoice);
+        }
+  
+        $(".player-choice").on("click", function () {
+            playerGuess = parseInt($(this).attr("data-guessvalue"));
+            if (playerGuess === randomChoice.answer) {
+                stop();
+                correct++;
+            }console.log(playerGuess);
+        });
+    }
+
+
+
     function timerRun() {
         if (!running){
         intervalId = setInterval(decrement, 1000);

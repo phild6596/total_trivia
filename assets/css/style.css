@@ -8,6 +8,10 @@ h1 {
     color: white;
 }
 
+h2 {
+    color: white;
+}
+
 .start-button {
     cursor: pointer;
     border: none;
@@ -23,6 +27,19 @@ h1 {
 
 p {
     color: white;
+}
+
+.possible-answers {
+    width: fit-content;
+}
+
+.player-choice {
+    background: red;
+    margin: 20px;
+    width: 200px;
+    text-align: center;
+    padding: 15px;
+    cursor: pointer;
 }
 
 .correct {
