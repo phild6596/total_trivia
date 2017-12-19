@@ -8,6 +8,15 @@ h1 {
     color: white;
 }
 
+.start-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    font-size: 24px;
+    background-color: red;
+    padding: 12px;
+}
+
 .timer {
     color: white;
 }
