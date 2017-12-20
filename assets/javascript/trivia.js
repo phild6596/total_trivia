@@ -31,14 +31,13 @@ $(document).ready(function onStart() {
     //Declared variables
     var correct = 0;
     var incorrect = 0;
-    var time = 20;
+    var time;
     var running = false;
     var intervalId;
     var clockRunning = false;
-    var qHolder = [];
+   // var qHolder = [];
 
 $("#play-again").hide();
-
 
 
 //main game start and reset
@@ -46,18 +45,20 @@ $(".start-button").on("click", function reset() {
     $("p").hide();
     $(".start-button").hide();
 
-    for (i = 0; i < triviaQuestions.length; i++) {
-        var qholder = triviaQuestions[i];
-        qHolder.push(triviaQuestions[i]);
-        console.log(qholder);
-    }
     
-    showQuestionAndAnswers();
-    
-    function showQuestionAndAnswers() {
-        idx = Math.floor(Math.random() * triviaQuestions.length);
-        randomChoice = triviaQuestions[idx];
-        console.log(randomChoice);
+
+    // for (i = 0; i < triviaQuestions.length; i++) {
+
+    //     showQuestionAndAnswers(i);
+    //     setTimeout(showQuestionAndAnswers(i), time);
+    // }
+    showQuestionAndAnswers(0);
+    function showQuestionAndAnswers(index) {
+        $(".results").hide();
+        $(".question-picked").show();
+        $(".timer").show();
+        timerRun();
+        randomChoice = triviaQuestions[index];
         $(".question-picked").html("<h2>" + randomChoice.question + "</h2>");
         //go over this again, still unclear
         for (var i= 0; i < randomChoice.choices.length; i++) {
@@ -69,22 +70,43 @@ $(".start-button").on("click", function reset() {
         }
   
         $(".player-choice").on("click", function () {
+            stop();
             playerGuess = parseInt($(this).attr("data-guessvalue"));
             if (playerGuess === randomChoice.answer) {
-                stop();
+                $(".results").html("<img src=" + randomChoice.photo +">");
+                $(".results").show();
                 correct++;
-            }console.log(playerGuess);
-        });
+            }
+            else {
+                incorrect++;
+            }
+            if (index == triviaQuestions.length - 1){
+                if(correct > 2){
+                    alert("Winner");
+                }
+                else (alert("You Lose"));
+                $("#play-again").show()
+                $("#play-again").on("click", onStart());
+            }
+            else {
+                $(".possible-answers").html("");
+                $(".question-picked").hide();
+                $(".timer").hide();
+                setTimeout(function() {showQuestionAndAnswers(index+1)}, 3000);
+            }
+            
+        }
+    );
     }
 
-
-
     function timerRun() {
+        time = 20;
         if (!running){
         intervalId = setInterval(decrement, 1000);
         running = true;
         }
     }
+    
     function decrement() {
         time--;
         $(".timer").html("<h3>You have "+ time + " seconds left!<h3");
@@ -92,10 +114,11 @@ $(".start-button").on("click", function reset() {
             stop();
         }
     }
+    
     function stop() {
+        running = false;
         clearInterval(intervalId);
     }
-    timerRun();
 }
 )
 });

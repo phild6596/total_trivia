@@ -2,6 +2,7 @@ body {
     background-image: url(../images/gnr.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
+    background-position-y: -150px;
 }
 
 h1 {
