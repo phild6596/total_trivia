@@ -34,12 +34,12 @@ var correct = 0;
 var incorrect = 0;
 var time;
 var running = false;
- var intervalId;
+var intervalId;
 var clockRunning = false;
 var slash = "assets/images/slashyoulose.gif";
 
 
-$("#reset").hide();
+    $("#reset").hide();
 
 //main game start and reset
 $(".start-button").on("click", function gameStart() {
@@ -48,7 +48,6 @@ $(".start-button").on("click", function gameStart() {
     $(".start-button").hide();
     showQuestionAndAnswers(0);
 });
-
 //Time functions
 function timerRun() {
     time = 20;
@@ -71,7 +70,7 @@ function stop() {
     clearInterval(intervalId);
 }
 
-//Game play begins
+//Game functions and loops
 function showQuestionAndAnswers(index) {
     $(".results").hide();
     $(".question-picked").show();
@@ -80,7 +79,7 @@ function showQuestionAndAnswers(index) {
     randomChoice = triviaQuestions[index];
     $(".question-picked").html("<h2>" + randomChoice.question + "</h2>");
 
-//Game for loop and added div
+//Game for loop
     for (var i= 0; i < randomChoice.choices.length; i++) {
         var playerChoice = $("<div>");
         playerChoice.addClass("player-choice");
@@ -116,11 +115,11 @@ function showQuestionAndAnswers(index) {
                     $("#reset").show();
                 }
                 else  {
-                    $(".question-picked").hide();
-                    $(".possible-answers").hide();
-                    $(".timer").hide();
                     $(".final-standings").html("Just a little Patience...try again");
                     $(".final-standings").show();
+                    $(".question-picked").hide();
+                    $(".timer").hide();
+                    $(".possible-answers").html("");
                     $("#reset").show();
                 }
             }
@@ -134,16 +133,32 @@ function showQuestionAndAnswers(index) {
 }   
 
 //Game reset
-        $("#reset").on("click", function gameStart() {
-        correct = "";
-        incorrect = "";
+    $("#reset").on("click", function gameStart() {
+        correct = 0;
+        incorrect = 0;
+        $(".correct").html("Correct: " + correct);
+        $(".incorrect").html("Incorrect: " + incorrect);
         $(".final-standings").hide();
         $("p").hide();
         $("#reset").hide();
         $(".possible-answers").empty();
         $(".question-picked").empty();
         showQuestionAndAnswers(0);
-    }); 
+    });
 
 }
 )
+
+
+
+
+//$("#reset").on("click", function gameStart() {
+//  $(".incorrect").html("Incorrect: " + incorrect);
+//    $(".correct").html("correct: " + correct);
+ //   $(".final-standings").hide();
+    //$("p").hide();
+    //$("#reset").hide();
+    //$(".possible-answers").html("");
+   // $(".question-picked").html("");
+   // showQuestionAndAnswers(0);
+//});
