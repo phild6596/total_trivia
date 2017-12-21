@@ -50,7 +50,7 @@ $(".start-button").on("click", function gameStart() {
 });
 //Time functions
 function timerRun() {
-    time = 20;
+    time = 10;
     if (!running) {
         intervalId = setInterval(decrement, 1000);
         running = true;
@@ -61,7 +61,10 @@ function decrement() {
     time--;
     $(".timer").html("<h3>You have " + time + " seconds left!<h3");
     if (time === 0) {
+        incorrect++
         stop();
+        $(".incorrect").html("Incorrect: " + incorrect);
+        //setTimeout(function () {showQuestionAndAnswers()}, 3000);
     }
 }
 
@@ -69,6 +72,7 @@ function stop() {
     running = false;
     clearInterval(intervalId);
 }
+
 
 //Game functions and loops
 function showQuestionAndAnswers(index) {
