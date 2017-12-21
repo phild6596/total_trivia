@@ -35,90 +35,110 @@ $(document).ready(function onStart() {
     var running = false;
     var intervalId;
     var clockRunning = false;
-   // var qHolder = [];
+    var slash = "assets/images/slashyoulose.gif";
 
-$("#play-again").hide();
 
+    $("#reset").hide();
 
 //main game start and reset
-$(".start-button").on("click", function reset() {
+$(".start-button").on("click", function gameStart() {
+    $(".final-standings").hide();
     $("p").hide();
     $(".start-button").hide();
-
-    
-
-    // for (i = 0; i < triviaQuestions.length; i++) {
-
-    //     showQuestionAndAnswers(i);
-    //     setTimeout(showQuestionAndAnswers(i), time);
-    // }
     showQuestionAndAnswers(0);
-    function showQuestionAndAnswers(index) {
-        $(".results").hide();
-        $(".question-picked").show();
-        $(".timer").show();
-        timerRun();
-        randomChoice = triviaQuestions[index];
-        $(".question-picked").html("<h2>" + randomChoice.question + "</h2>");
+});
+
+function timerRun() {
+    time = 20;
+    if (!running) {
+        intervalId = setInterval(decrement, 1000);
+        running = true;
+    }
+}
+
+function decrement() {
+    time--;
+    $(".timer").html("<h3>You have " + time + " seconds left!<h3");
+    if (time === 0) {
+        stop();
+    }
+}
+
+function stop() {
+    running = false;
+    clearInterval(intervalId);
+}
+function showQuestionAndAnswers(index) {
+    $(".results").hide();
+    $(".question-picked").show();
+    $(".timer").show();
+    timerRun();
+    randomChoice = triviaQuestions[index];
+    $(".question-picked").html("<h2>" + randomChoice.question + "</h2>");
         //go over this again, still unclear
-        for (var i= 0; i < randomChoice.choices.length; i++) {
-            var playerChoice = $("<div>");
-            playerChoice.addClass("player-choice");
-            playerChoice.html(randomChoice.choices[i]);
-            playerChoice.attr("data-guessvalue", i);
-            $(".possible-answers").append(playerChoice);
-        }
-  
-        $(".player-choice").on("click", function () {
+    for (var i= 0; i < randomChoice.choices.length; i++) {
+        var playerChoice = $("<div>");
+        playerChoice.addClass("player-choice");
+        playerChoice.html(randomChoice.choices[i]);
+        playerChoice.attr("data-guessvalue", i);
+        $(".possible-answers").append(playerChoice);
+    }
+
+        
+    $(".player-choice").on("click", function () {
             stop();
             playerGuess = parseInt($(this).attr("data-guessvalue"));
             if (playerGuess === randomChoice.answer) {
+                correct++;
+                $(".correct").html("Correct: " + correct);
                 $(".results").html("<img src=" + randomChoice.photo +">");
                 $(".results").show();
-                correct++;
             }
             else {
+                stop();
                 incorrect++;
+                $(".incorrect").html("Incorrect: " + incorrect);
+                $(".results").html("<img src=" + slash + ">");
+                $(".results").show();
             }
-            if (index == triviaQuestions.length - 1){
-                if(correct > 2){
-                    alert("Winner");
+            if (index === triviaQuestions.length - 1){
+                if(correct > 3){
+                    $(".final-standings").html("Congrats, you got " + correct + " right!");
+                    $(".final-standings").show();
+                    $(".question-picked").hide();
+                    $(".timer").hide();
+                    $(".possible-answers").html("");
+                    $("#reset").show();
                 }
-                else (alert("You Lose"));
-                $("#play-again").show()
-                $("#play-again").on("click", onStart());
+                else  {
+                    $(".question-picked").hide();
+                    $(".possible-answers").hide();
+                    $(".timer").hide();
+                    $(".final-standings").html("Just a little Patience...try again");
+                    $(".final-standings").show();
+                    $("#reset").show();
+                }
             }
             else {
                 $(".possible-answers").html("");
                 $(".question-picked").hide();
                 $(".timer").hide();
                 setTimeout(function() {showQuestionAndAnswers(index+1)}, 3000);
-            }
-            
-        }
-    );
-    }
+            } 
+        })
+}   
+        $("#reset").on("click", function gameStart() {
+        correct = "";
+        incorrect = "";
+        $(".final-standings").hide();
+        $("p").hide();
+        $("#reset").hide();
+        $(".possible-answers").empty();
+        $(".question-picked").empty();
+       // for (var i = 0; i < emptyArray.length; i++) {
+        //}
+        showQuestionAndAnswers(0);
+    }); 
 
-    function timerRun() {
-        time = 20;
-        if (!running){
-        intervalId = setInterval(decrement, 1000);
-        running = true;
-        }
-    }
-    
-    function decrement() {
-        time--;
-        $(".timer").html("<h3>You have "+ time + " seconds left!<h3");
-        if (time === 0) {
-            stop();
-        }
-    }
-    
-    function stop() {
-        running = false;
-        clearInterval(intervalId);
-    }
 }
 )
-});

@@ -1,5 +1,6 @@
 body {
     background-image: url(../images/gnr.jpg);
+    background-color: black;
     background-repeat: no-repeat;
     background-size: 100%;
     background-position-y: -150px;
@@ -30,10 +31,18 @@ p {
     color: white;
 }
 
+img {
+    width: 400px;
+    height: 400px;
+}
+
 .possible-answers {
     width: fit-content;
 }
-
+.final-standings {
+    color: white;
+    font-size: 36px;
+}
 .player-choice {
     background: red;
     margin: 20px;
