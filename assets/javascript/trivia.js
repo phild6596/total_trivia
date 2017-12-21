@@ -1,44 +1,45 @@
 $(document).ready(function onStart() {
 
-    //Trivia questions
-    var triviaQuestions = [
-        {
-            question: "What was the original name of Guns 'N Roses?",
-            choices: ["Snakepit", "Reckless Road", "Hollywood Rose", "Troubadors"],
-            answer : 2,
-            photo :"assets/images/hollywoodrose.jpg"
-        },
-        {
-            question: "Axl Rose is from?",
-            choices: ["Indiana", "Illinois", "Idaho", "Ohio"],
-            answer: 0,
-            photo: "assets/images/youngaxl.jpg"
-        },
-        {
-            question: "Slash's real name is?",
-            choices: ["William Bailey", "Samuel Hudgens", "Michael Rose", "Saul Hudson"],
-            answer: 3,
-            photo: "assets/images/slash.jpg"
-        },
-        {
-            question: "The song Welcome to the Jungle was written about what city?",
-            choices: ["Los Angeles", "New York", "Chicago", "Detroit"],
-            answer: 0,
-            photo: "assets/images/losangeles.jpg"
-        }
+//Trivia questions
+var triviaQuestions = [
+    {
+        question: "What was the original name of Guns 'N Roses?",
+        choices: ["Snakepit", "Reckless Road", "Hollywood Rose", "Troubadors"],
+        answer : 2,
+        photo :"assets/images/hollywoodrose.jpg"
+    },
+    {
+        question: "Axl Rose is from?",
+        choices: ["Indiana", "Illinois", "Idaho", "Ohio"],
+        answer: 0,
+        photo: "assets/images/youngaxl.jpg"
+    },
+    {
+        question: "Slash's real name is?",
+        choices: ["William Bailey", "Samuel Hudgens", "Michael Rose", "Saul Hudson"],
+        answer: 3,
+        photo: "assets/images/slash.jpg"
+    },
+    {
+        question: "The song Welcome to the Jungle was written about what city?",
+        choices: ["Los Angeles", "New York", "Chicago", "Detroit"],
+        answer: 0,
+        photo: "assets/images/losangeles.jpg"
+    }
         
     ];
-    //Declared variables
-    var correct = 0;
-    var incorrect = 0;
-    var time;
-    var running = false;
-    var intervalId;
-    var clockRunning = false;
-    var slash = "assets/images/slashyoulose.gif";
+
+//Declared variables
+var correct = 0;
+var incorrect = 0;
+var time;
+var running = false;
+ var intervalId;
+var clockRunning = false;
+var slash = "assets/images/slashyoulose.gif";
 
 
-    $("#reset").hide();
+$("#reset").hide();
 
 //main game start and reset
 $(".start-button").on("click", function gameStart() {
@@ -48,6 +49,7 @@ $(".start-button").on("click", function gameStart() {
     showQuestionAndAnswers(0);
 });
 
+//Time functions
 function timerRun() {
     time = 20;
     if (!running) {
@@ -68,6 +70,8 @@ function stop() {
     running = false;
     clearInterval(intervalId);
 }
+
+//Game play begins
 function showQuestionAndAnswers(index) {
     $(".results").hide();
     $(".question-picked").show();
@@ -75,7 +79,8 @@ function showQuestionAndAnswers(index) {
     timerRun();
     randomChoice = triviaQuestions[index];
     $(".question-picked").html("<h2>" + randomChoice.question + "</h2>");
-        //go over this again, still unclear
+
+//Game for loop and added div
     for (var i= 0; i < randomChoice.choices.length; i++) {
         var playerChoice = $("<div>");
         playerChoice.addClass("player-choice");
@@ -84,7 +89,7 @@ function showQuestionAndAnswers(index) {
         $(".possible-answers").append(playerChoice);
     }
 
-        
+ //Player click functions/Wins and losses       
     $(".player-choice").on("click", function () {
             stop();
             playerGuess = parseInt($(this).attr("data-guessvalue"));
@@ -127,6 +132,8 @@ function showQuestionAndAnswers(index) {
             } 
         })
 }   
+
+//Game reset
         $("#reset").on("click", function gameStart() {
         correct = "";
         incorrect = "";
@@ -135,8 +142,6 @@ function showQuestionAndAnswers(index) {
         $("#reset").hide();
         $(".possible-answers").empty();
         $(".question-picked").empty();
-       // for (var i = 0; i < emptyArray.length; i++) {
-        //}
         showQuestionAndAnswers(0);
     }); 
 
