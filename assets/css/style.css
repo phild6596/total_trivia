@@ -6,15 +6,32 @@ body {
     background-position-y: -150px;
 }
 
-h1 {
+h1, h2 {
     color: white;
 }
 
-h2 {
-    color: white;
+h1{
+    font-size: 66px;
+    padding: 15px;
+    text-align: center;
 }
 
 .start-button {
+    position: relative;
+    left: 500px;
+    top: 50px;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    font-size: 24px;
+    background-color: red;
+    padding: 12px;
+}
+
+#reset{
+    position: relative;
+    left: 618px;
+    top: -10px;
     cursor: pointer;
     border: none;
     border-radius: 12px;
@@ -25,10 +42,27 @@ h2 {
 
 .timer {
     color: white;
+    position: relative;
+    top: 20px;
+    left: 220px;
+    font-size: 50px;
 }
 
 p {
     color: white;
+    font-size: 36px;
+    width: 70%;
+    padding: 15px;
+    line-height: 48px;
+}
+
+.question-picked {
+    position: relative;
+    text-align: center;
+    left: 190px;
+    top: 50px;
+    font-size: 36px;
+    width: 500px;
 }
 
 img {
@@ -38,6 +72,9 @@ img {
 
 .possible-answers {
     width: fit-content;
+    position: relative;
+    left: 300px;
+    top: 75px;
 }
 .final-standings {
     color: white;
@@ -52,9 +89,13 @@ img {
     cursor: pointer;
 }
 
-.correct {
-    color: white;
+.results {
+    position: relative;
+    left: 500px;
 }
-.incorrect {
+
+.correct, .incorrect {
     color: white;
+    font-size: 48px;
 }
+

@@ -25,6 +25,42 @@ var triviaQuestions = [
         choices: ["Los Angeles", "New York", "Chicago", "Detroit"],
         answer: 0,
         photo: "assets/images/losangeles.jpg"
+    },
+    {
+        question: "The album Appetite for Destruction was released in what year?",
+        choices: ["1989", "1987", "1990", "1988"],
+        answer: 1,
+        photo: "assets/images/appetite.jpg"
+    },
+    {
+        question: "The first number 1 hit that Guns 'N Roses had was which song?",
+        choices: ["Paradise City", "Welcome to the Jungle", "Patience", "Sweet Child O' Mine"],
+        answer: 3,
+        photo: "assets/images/sweetchild.gif"
+    },
+    {
+        question: "Which band member left due to being tired of the fame?",
+        choices: ["Steven Adler", "Slash", "Gilbey Clark", "Izzy Stradlin"],
+        answer: 3,
+        photo: "assets/images/izzy.jpeg"
+    },
+    {
+        question: "The preferred guitar used by Slash is the ",
+        choices: ["Fender", "Ibanez", "Gibson", "Guild"],
+        answer: 2,
+        photo: "assets/images/gibson.jpg"
+    },
+    {
+        question: "For which movie did Guns 'N Roses contribute a song to?",
+        choices: ["Terminator 2", "Pulp Fiction", "Clerks", "Clueless"],
+        answer: 0,
+        photo: "assets/images/terminator.jpg"
+    },
+    {
+        question: "Guns 'N Roses was inducted into the Rock n Roll Hall of Fame by which artist/group?",
+        choices: ["Pearl Jam", "Black Sabbath", "Green Day", "Alice Cooper"],
+        answer: 2,
+        photo: "assets/images/greenday.jpg"
     }
         
     ];
@@ -38,8 +74,8 @@ var intervalId;
 var clockRunning = false;
 var slash = "assets/images/slashyoulose.gif";
 
-
-    $("#reset").hide();
+//Hidden reset button
+$("#reset").hide();
 
 //main game start and reset
 $(".start-button").on("click", function gameStart() {
@@ -48,6 +84,10 @@ $(".start-button").on("click", function gameStart() {
     $(".start-button").hide();
     showQuestionAndAnswers(0);
 });
+
+//Game functions and loops
+function showQuestionAndAnswers(index) {
+
 //Time functions
 function timerRun() {
     time = 10;
@@ -64,30 +104,40 @@ function decrement() {
         incorrect++
         stop();
         $(".incorrect").html("Incorrect: " + incorrect);
-        //setTimeout(function () {showQuestionAndAnswers()}, 3000);
-    }
+        setTimeout(function(){
+            showQuestionAndAnswers(index+1)
+            if (incorrect >= 5) {
+                stop();
+                $(".final-standings").html("Just a little Patience...try again");
+                $(".final-standings").show();
+                $(".question-picked").hide();
+                $(".timer").hide();
+                $(".possible-answers").html("");
+                $(".results").html("<img src=" + slash + ">");
+                $(".results").show();
+                $("#reset").show();
+            }}, 1000);
+    } 
 }
 
 function stop() {
     running = false;
     clearInterval(intervalId);
 }
-
-
-//Game functions and loops
-function showQuestionAndAnswers(index) {
+//What is shown and hidden at Game start click
+    $(".possible-answers").empty();
     $(".results").hide();
     $(".question-picked").show();
     $(".timer").show();
     timerRun();
-    randomChoice = triviaQuestions[index];
-    $(".question-picked").html("<h2>" + randomChoice.question + "</h2>");
+    questionChoice = triviaQuestions[index];
+    $(".question-picked").html("<h2>" + questionChoice.question + "</h2>");
 
-//Game for loop
-    for (var i= 0; i < randomChoice.choices.length; i++) {
+//Game for loop and HTML print
+    for (var i= 0; i < questionChoice.choices.length; i++) {
         var playerChoice = $("<div>");
         playerChoice.addClass("player-choice");
-        playerChoice.html(randomChoice.choices[i]);
+        playerChoice.html(questionChoice.choices[i]);
         playerChoice.attr("data-guessvalue", i);
         $(".possible-answers").append(playerChoice);
     }
@@ -96,10 +146,10 @@ function showQuestionAndAnswers(index) {
     $(".player-choice").on("click", function () {
             stop();
             playerGuess = parseInt($(this).attr("data-guessvalue"));
-            if (playerGuess === randomChoice.answer) {
+            if (playerGuess === questionChoice.answer) {
                 correct++;
                 $(".correct").html("Correct: " + correct);
-                $(".results").html("<img src=" + randomChoice.photo +">");
+                $(".results").html("<img src=" + questionChoice.photo +">");
                 $(".results").show();
             }
             else {
@@ -110,7 +160,7 @@ function showQuestionAndAnswers(index) {
                 $(".results").show();
             }
             if (index === triviaQuestions.length - 1){
-                if(correct > 3){
+                if(correct > 6){
                     $(".final-standings").html("Congrats, you got " + correct + " right!");
                     $(".final-standings").show();
                     $(".question-picked").hide();
@@ -133,7 +183,7 @@ function showQuestionAndAnswers(index) {
                 $(".timer").hide();
                 setTimeout(function() {showQuestionAndAnswers(index+1)}, 3000);
             } 
-        })
+    })
 }   
 
 //Game reset
@@ -149,20 +199,4 @@ function showQuestionAndAnswers(index) {
         $(".question-picked").empty();
         showQuestionAndAnswers(0);
     });
-
-}
-)
-
-
-
-
-//$("#reset").on("click", function gameStart() {
-//  $(".incorrect").html("Incorrect: " + incorrect);
-//    $(".correct").html("correct: " + correct);
- //   $(".final-standings").hide();
-    //$("p").hide();
-    //$("#reset").hide();
-    //$(".possible-answers").html("");
-   // $(".question-picked").html("");
-   // showQuestionAndAnswers(0);
-//});
+})
