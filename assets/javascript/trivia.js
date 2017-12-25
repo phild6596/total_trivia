@@ -76,12 +76,15 @@ var slash = "assets/images/slashyoulose.gif";
 
 //Hidden reset button
 $("#reset").hide();
-
+$(".correct").hide();
+$(".incorrect").hide();
 //main game start and reset
 $(".start-button").on("click", function gameStart() {
     $(".final-standings").hide();
     $("p").hide();
     $(".start-button").hide();
+    $(".correct").show();
+    $(".incorrect").show();
     showQuestionAndAnswers(0);
 });
 
@@ -160,7 +163,7 @@ function stop() {
                 $(".results").show();
             }
             if (index === triviaQuestions.length - 1){
-                if(correct > 6){
+                if(correct >= 6){
                     $(".final-standings").html("Congrats, you got " + correct + " right!");
                     $(".final-standings").show();
                     $(".question-picked").hide();

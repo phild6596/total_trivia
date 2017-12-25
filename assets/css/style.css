@@ -99,3 +99,48 @@ img {
     font-size: 48px;
 }
 
+@media (max-width:376px) {
+    body {
+        background-position-x: 82px;
+        background-position-y: 64px;}
+    h1 {
+        padding-top: 20px;
+        width: max-content;
+        margin-left: -10px;
+        }
+    .timer {
+        position: absolute;
+        top: 600px;
+        left: 44px;
+    }
+    p {
+        position: absolute;
+        top: 306px;
+        left: 100px;
+        padding: 15px;
+        width: 100%;
+    }
+    .question-picked {
+        text-align: left;
+        left: 22px;
+        top: 230px;
+    }
+
+    .possible-answers {
+        left: 332px;
+        top: 220px;
+    }
+
+    .start-button {
+        left: 156px;
+        top: 600px;
+    }
+    .correct, .incorrect {
+        position: relative;
+        top: 450px;
+    }
+    
+    .results {
+        left: 126px;
+    }
+}
